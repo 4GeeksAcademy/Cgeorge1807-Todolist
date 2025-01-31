@@ -8,13 +8,24 @@ const Home = () => {
 	const [lista, setLista] = useState(["Make the bed", "Wash my hands", "Eat", "Walk the dog"])
 	const [tareas, setTareas] = useState("")
 
+
 	const agregar = (evento) => {
-		evento.preventDefault()
-		console.log(evento.key)
+
 		if (evento.key === "Enter") {
-			console.log(tareas)
+			evento.preventDefault()
 			setLista([...lista, tareas])
+			setTareas("")
 		}
+	}
+
+	const eliminar = (index) => {
+		let aux = []
+		aux = lista.filter((item,id)=>{
+			if (index != id){
+				return item
+			}
+		})
+		setLista(aux)
 	}
 
 	return (
@@ -36,10 +47,12 @@ const Home = () => {
 					lista.map((tarea, index) => (
 						<li key={index} className="list-group-item border border-secondary">
 							{tarea}
+							<button type="button" class="btn btn-outline-danger float-end hidden-icon" onClick={()=>eliminar(index)}>x</button>
 						</li>
 					))
 				}
 			</ul>
+			<h4 className="mt-3">tareas pendientes: {lista.length}</h4>
 		</div>
 	);
 };
